@@ -9,12 +9,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnAdd.setOnClickListener{
-            val firstNumber = etFirstNumber.text.toString().toInt()
-            val secondNumber = etSecondNumber.text.toString().toInt()
-            val result = firstNumber + secondNumber
-
-            tvResult.text = result.toString()
+        btnAddImage.setOnClickListener{
+            ivImage.setImageResource(R.drawable.luffy)
         }
     }
 }
