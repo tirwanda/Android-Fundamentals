@@ -3,27 +3,22 @@ package com.example.android_fundamentals
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.RadioButton
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.custom_toast.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnOrder.setOnClickListener{
-            val checkedMeetRadioButtonId = rgMeet.checkedRadioButtonId
-            val meet = findViewById<RadioButton>(checkedMeetRadioButtonId)
-            val cheese = cbCheese.isChecked
-            val onions = cbOnions.isChecked
-            val salad = cbSalad.isChecked
-
-            val orderString = "You order burger with: \n" +
-                    "${meet.text}" +
-                    (if (cheese) "\nCheese" else "") +
-                    (if (onions) "\nOnions" else "") +
-                    (if (salad) "\nSalad" else "")
-
-            tvOrder.text = orderString
+        btnShowToast.setOnClickListener {
+//            Toast.makeText(this, "Hi, I am a Toast", Toast.LENGTH_LONG).show()
+            Toast(this).apply {
+                duration = Toast.LENGTH_LONG
+                view = layoutInflater.inflate(R.layout.custom_toast, clToast)
+                show()
+            }
         }
     }
 }
