@@ -2,10 +2,7 @@ package com.example.android_fundamentals
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -13,21 +10,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val customList = listOf<String>("First", "Second", "Third", "Forth")
-        val adapter = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, customList)
+        var todoList = mutableListOf(
+            Todo("Learn Android Fundamentals", false),
+            Todo("Create Project From BWA", false),
+            Todo("Create Project Todo List App", false),
+            Todo("Create Project Spotify Clone", false)
+        )
 
-        spMonths.adapter = adapter
+        val adapter = TodoAdapter(todoList)
+        rvTodos.adapter = adapter
+        rvTodos.layoutManager = LinearLayoutManager(this)
 
-        spMonths.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(this@MainActivity,
-                    "You selected ${adapterView?.getItemAtPosition(position).toString()}",
-                    Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
+        btnAdd.setOnClickListener {
+            val title = etTodo.text.toString()
+            val todo = Todo(title, false)
+            todoList.add(todo)
+            adapter.notifyItemInserted(todoList.size - 1)
+            etTodo.text.clear()
         }
     }
 }
