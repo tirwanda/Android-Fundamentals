@@ -10,23 +10,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var todoList = mutableListOf(
-            Todo("Learn Android Fundamentals", false),
-            Todo("Create Project From BWA", false),
-            Todo("Create Project Todo List App", false),
-            Todo("Create Project Spotify Clone", false)
-        )
+        val firstFragment = FirstFragment()
+        val secondFragment = SecondFragment()
 
-        val adapter = TodoAdapter(todoList)
-        rvTodos.adapter = adapter
-        rvTodos.layoutManager = LinearLayoutManager(this)
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.flFragment, firstFragment)
+            commit()
+        }
 
-        btnAdd.setOnClickListener {
-            val title = etTodo.text.toString()
-            val todo = Todo(title, false)
-            todoList.add(todo)
-            adapter.notifyItemInserted(todoList.size - 1)
-            etTodo.text.clear()
+        btnFragment1.setOnClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.flFragment, firstFragment)
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+        btnFragment2.setOnClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.flFragment, secondFragment)
+                addToBackStack(null)
+                commit()
+            }
         }
     }
 }
