@@ -28,8 +28,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnStopService.setOnClickListener {
-            MyIntentService.stopService()
-            tvServiceInfo.text = "Service is Stop"
+            Intent(this, MyService::class.java).also {
+                stopService(it)
+                tvServiceInfo.text = "Service is Stopped"
+            }
+        }
+
+        btnSendData.setOnClickListener {
+            Intent(this, MyService::class.java).also {
+                val dataString = etData.text.toString()
+                it.putExtra("EXTRA_DATA", dataString)
+                startService(it)
+            }
         }
     }
 }
